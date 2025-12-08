@@ -27,7 +27,7 @@ Painel administrativo **open-source**, inspirado no Skoruba IdentityServer4 Admi
 | Identity | ASP.NET Core Identity |
 | OAuth/OIDC | OpenIddict |
 | Frontend | Blazor WebAssembly |
-| Banco de dados | SQL Server / PostgreSQL |
+| Banco de dados | SQL Server / PostgreSQL / MySQL / SQLite |
 
 ---
 
@@ -36,10 +36,10 @@ Painel administrativo **open-source**, inspirado no Skoruba IdentityServer4 Admi
 ```
 OpenIddict.Admin/
 ├─ src/
-│  ├─ OpenIddict.Admin.API/           # Backend WebAPI
-│  ├─ OpenIddict.Admin.UI/            # Frontend SPA (Blazor)
-│  ├─ OpenIddict.Admin.Core/          # DTOs, interfaces e serviços
-│  └─ OpenIddict.Admin.Infrastructure/# EF Core, Identity, OpenIddict
+│  ├─ Seoldor.OpenIddict.Admin.API/           # Backend WebAPI
+│  ├─ Seoldor.OpenIddict.Admin.UI/            # Frontend SPA (Blazor)
+│  ├─ Seoldor.OpenIddict.Admin.Core/          # DTOs, interfaces e serviços
+│  └─ Seoldor.OpenIddict.Admin.Infrastructure/# EF Core, Identity, OpenIddict
 ├─ tests/                              # Testes unitários
 ├─ docs/                               # Imagens, diagramas, GIFs
 └─ README.md
@@ -60,9 +60,10 @@ Backend (ASP.NET Core WebAPI)
  ├─ Services e DTOs
  ├─ Identity + OpenIddict
  │
- │ EF Core
+ │ EF Core (multi-banco)
  ▼
-Banco de Dados (SQL Server / PostgreSQL)
+Banco de Dados
+ ├─ SQL Server / PostgreSQL / MySQL / SQLite
  ├─ AspNetUsers / AspNetRoles / AspNetUserClaims
  ├─ OpenIddictApplications / OpenIddictScopes / OpenIddictTokens
 ```
@@ -71,44 +72,95 @@ Banco de Dados (SQL Server / PostgreSQL)
 
 ---
 
+## ⚡ Configuração Multi-Banco
+
+No `appsettings.json`, configure o banco e a connection string:
+
+```json
+{
+  "Database": {
+    "Provider": "PostgreSQL"  // SqlServer | PostgreSQL | MySQL | SQLite
+  },
+  "ConnectionStrings": {
+    "DefaultConnection": "Host=localhost;Database=OpenIddictAdmin;Username=postgres;Password=YourPassword;"
+  }
+}
+```
+
+### Exemplos por banco
+
+- **SQL Server**
+```json
+"Provider": "SqlServer",
+"DefaultConnection": "Server=localhost;Database=OpenIddictAdmin;User Id=sa;Password=YourPassword;"
+```
+
+- **PostgreSQL**
+```json
+"Provider": "PostgreSQL",
+"DefaultConnection": "Host=localhost;Database=OpenIddictAdmin;Username=postgres;Password=YourPassword;"
+```
+
+- **MySQL**
+```json
+"Provider": "MySQL",
+"DefaultConnection": "Server=localhost;Database=OpenIddictAdmin;User=root;Password=YourPassword;"
+```
+
+- **SQLite**
+```json
+"Provider": "SQLite",
+"DefaultConnection": "Data Source=OpenIddictAdmin.db"
+```
+
+---
+
 ## ⚡ Primeiros Passos
 
-1. **Clone o repositório:**
+1. **Clone o repositório**
 
 ```bash
 git clone https://github.com/seu-usuario/OpenIddict.Admin.git
 cd OpenIddict.Admin
 ```
 
-2. **Configure a conexão com o banco** (`appsettings.json`):
+2. **Instale os pacotes EF Core do seu banco escolhido**
 
-```json
-"ConnectionStrings": {
-  "DefaultConnection": "Server=localhost;Database=OpenIddictAdmin;User Id=sa;Password=YourPassword;"
-}
+```bash
+# SQL Server
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+
+# PostgreSQL
+dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL
+
+# MySQL
+dotnet add package Pomelo.EntityFrameworkCore.MySql
+
+# SQLite
+dotnet add package Microsoft.EntityFrameworkCore.Sqlite
 ```
 
-3. **Atualize o banco com EF Core:**
+3. **Atualize o banco de dados**
 
 ```bash
 cd src/OpenIddict.Admin.API
 dotnet ef database update
 ```
 
-4. **Rode a API:**
+4. **Rode a API**
 
 ```bash
 dotnet run
 ```
 
-5. **Rode o frontend Blazor:**
+5. **Rode o frontend Blazor**
 
 ```bash
 cd src/OpenIddict.Admin.UI
 dotnet run
 ```
 
-6. **Acesse o painel no navegador:**
+6. **Acesse o painel**
 
 ```
 https://localhost:5001

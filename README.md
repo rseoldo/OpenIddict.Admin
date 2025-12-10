@@ -1,6 +1,6 @@
 # OpenIddict Admin
 
-Painel administrativo **open-source**, inspirado no Skoruba IdentityServer4 Admin, usando **OpenIddict + ASP.NET Core Identity**, pronto para integração com projetos .NET.
+Painel administrativo **open-source**, usando **OpenIddict + ASP.NET Core Identity**, pronto para integração com projetos .NET.
 
 ![Dashboard Preview](docs/dashboard-preview.gif)
 > Painel Blazor WebAssembly com menu lateral, listagem de usuários, roles e claims.

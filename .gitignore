@@ -1,15 +1,19 @@
-## Arquivos do Visual Studio
+# -------------------------
+# Visual Studio / IDE
+# -------------------------
 .vs/
 *.user
 *.suo
 *.userosscache
 *.sln.docstates
+.idea/
+.vscode/
 
-## Pastas bin e obj
+# -------------------------
+# Build / binários
+# -------------------------
 **/bin/
 **/obj/
-
-## Arquivos de build
 *.dll
 *.exe
 *.pdb
@@ -17,19 +21,12 @@
 *.log
 *.vsix
 *.nupkg
-
-## Dependências do NuGet
-*.nupkg
-*.snupkg
-.nuget/
-packages/
-project.lock.json
-project.fragment.lock.json
 artifacts/
 
-## ASP.NET / Blazor
+# -------------------------
+# ASP.NET / Blazor
+# -------------------------
 wwwroot/_framework/
-**/*.db
 appsettings*.json
 appsettings.*.json.user
 appsettings.Development.json
@@ -37,34 +34,36 @@ secrets.json
 *.publishsettings
 *.pfx
 *.key
+*.db
 
-## Rider
-.idea/
-
-## Visual Studio Code
-.vscode/
-
-## Node / Frontend (se usar npm/yarn)
+# -------------------------
+# Node / Frontend
+# -------------------------
 node_modules/
 npm-debug.log
 yarn-error.log
 yarn-debug.log
 
-## Logs
-*.log
+# -------------------------
+# Docker / Dev
+# -------------------------
+docker-compose.override.yml
+.env
 
-## Outros arquivos temporários
+# -------------------------
+# Logs e arquivos temporários
+# -------------------------
+*.log
 *.tmp
 *.temp
 *.bak
-*.swp
-*.DS_Store
-
-## MacOS
+*~
 .DS_Store
 
-## Linux
-*~
-
-## Pacotes do OpenIddict/Admin (se você tiver)
-*.db
+# -------------------------
+# OpenIddict / Identity
+# -------------------------
+# qualquer arquivo que contenha secrets, chaves, tokens ou certificados
+*.jwk
+*.key
+*.pfx

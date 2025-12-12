@@ -1,0 +1,53 @@
+﻿@page "/users"
+@using Seoldor.OpenIddict.Admin.Shared.Dtos.Users
+@using Seoldor.OpenIddict.Admin.UI.Services
+@inject IUserService UserService
+@inject NavigationManager NavigationManager
+
+<h3>Usuários</h3>
+
+@if (users == null)
+{
+    <p>Carregando...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Usuario</th>
+                <th>Confirmado</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var u in users)
+            {
+                <tr>
+                    <td>@u.Email</td>
+                    <td>@u.UserName</td>
+                    <td>@(u.EmailConfirmed ? "Sim" : "Não")</td>
+                    <td>
+                        <button @onclick="() => Edit(u.Id)" class="btn btn-primary btn-sm">Editar</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<UserDto>? users;
+
+    protected override async Task OnInitializedAsync()
+    {
+        users = await UserService.GetAllAsync();
+    }
+
+    void Edit(string id)
+    {
+        NavigationManager.NavigateTo($"/users/edit/{id}");
+    }
+}

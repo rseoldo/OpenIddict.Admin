@@ -1,0 +1,77 @@
+﻿@page "/users/details/{Id}"
+@using Seoldor.OpenIddict.Admin.Shared.Dtos.Users
+@using Seoldor.OpenIddict.Admin.UI.Services
+
+@inject IUserService UserService
+@inject NavigationManager NavigationManager
+
+<h3>Detalhes do Usuário</h3>
+<hr />
+
+@if (isLoading)
+{
+    <p>Carregando dados...</p>
+}
+else if (user == null)
+{
+    <p class="text-danger">Usuário não encontrado.</p>
+}
+else
+{
+    <div>
+        <ul class="nav nav-tabs mb-3">
+            <li class="nav-item">
+                <button class="nav-link @(activeTab == 0 ? "active" : "")"
+                        @onclick="() => SetTab(0)">
+                    Informações
+                </button>
+            </li>
+
+            <li class="nav-item">
+                <button class="nav-link @(activeTab == 1 ? "active" : "")"
+                        @onclick="() => SetTab(1)">
+                    Roles
+                </button>
+            </li>
+
+            <li class="nav-item">
+                <button class="nav-link @(activeTab == 2 ? "active" : "")"
+                        @onclick="() => SetTab(2)">
+                    Claims
+                </button>
+            </li>
+        </ul>
+
+        @if (activeTab == 0)
+        {
+            <InfoTab user="user" />
+        }
+        else if (activeTab == 1)
+        {
+            <RolesTab user="user" />
+        }
+        else if (activeTab == 2)
+        {
+            <ClaimsTab user="user" />
+        }
+    </div>
+
+    <button class="btn btn-secondary mt-3" @onclick="GoBack">Voltar</button>
+}
+
+@code {
+    [Parameter] public string Id { get; set; }
+
+    private UserDetailsDto? user;
+    private bool isLoading = true;
+    private int activeTab = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        user = await UserService.GetDetailsAsync(Id);
+        isLoading = false;
+    }
+
+    void SetTab(int index) => activeTab = index;
+    void GoBack() => NavigationManager.NavigateTo("/users");
+}

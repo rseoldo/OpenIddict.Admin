@@ -1,0 +1,19 @@
+﻿@using Seoldor.OpenIddict.Admin.Shared.Dtos.Users
+
+@if (user?.Roles?.Any() != true)
+{
+    <p>Nenhuma role atribuída.</p>
+}
+else
+{
+    <ul>
+        @foreach (var role in user.Roles)
+        {
+            <li>@role</li>
+        }
+    </ul>
+}
+
+@code {
+    [Parameter] public UserDetailsDto user { get; set; }
+}

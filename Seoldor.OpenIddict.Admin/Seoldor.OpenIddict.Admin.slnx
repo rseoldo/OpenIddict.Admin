@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="Seoldor.OpenIddict.Admin.Api/Seoldor.OpenIddict.Admin.Api.csproj" />
+  <Project Path="Seoldor.OpenIddict.Admin.Core/Seoldor.OpenIddict.Admin.Core.csproj" />
+  <Project Path="Seoldor.OpenIddict.Admin.Infrastructure/Seoldor.OpenIddict.Admin.Infrastructure.csproj" />
+  <Project Path="Seoldor.OpenIddict.Admin.Shared/Seoldor.OpenIddict.Admin.Shared.csproj" />
+  <Project Path="Seoldor.OpenIddict.Admin.UI/Seoldor.OpenIddict.Admin.UI.csproj" />
+</Solution>

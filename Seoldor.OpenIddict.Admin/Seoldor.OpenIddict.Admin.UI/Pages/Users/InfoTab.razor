@@ -1,0 +1,14 @@
+﻿@using Seoldor.OpenIddict.Admin.Shared.Dtos.Users
+
+@if (user != null)
+{
+    <div>
+        <p><strong>Email:</strong> @user.Email</p>
+        <p><strong>Usuário:</strong> @user.UserName</p>
+        <p><strong>Email Confirmado:</strong> @(user.EmailConfirmed ? "Sim" : "Não")</p>
+    </div>
+}
+
+@code {
+    [Parameter] public UserDetailsDto user { get; set; }
+}

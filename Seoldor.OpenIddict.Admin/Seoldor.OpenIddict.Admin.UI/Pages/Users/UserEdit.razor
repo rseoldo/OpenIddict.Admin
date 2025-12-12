@@ -1,0 +1,92 @@
+﻿@page "/users/edit/{Id}"
+@using Seoldor.OpenIddict.Admin.Shared.Dtos.Users
+@using Seoldor.OpenIddict.Admin.UI.Services
+
+@inject IUserService UserService
+@inject NavigationManager NavigationManager
+
+<h3>Editar Usuário</h3>
+<hr />
+
+@if (isLoading)
+{
+    <p>Carregando dados...</p>
+}
+else if (model == null)
+{
+    <p class="text-danger">Usuário não encontrado.</p>
+}
+else
+{
+    <EditForm Model="model" OnValidSubmit="UpdateUser">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="mb-3">
+            <label>Email</label>
+            <InputText class="form-control" @bind="model.Email" />
+        </div>
+
+        <div class="mb-3">
+            <label>Usuário</label>
+            <InputText class="form-control" @bind="model.UserName" />
+        </div>
+
+        <div class="mb-3">
+            <label>Confirmado?</label>
+            <InputCheckbox class="form-check-input" @bind="model.EmailConfirmed" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <button class="btn btn-secondary mx-2" @onclick="GoBack">Cancelar</button>
+
+        @if (saved)
+        {
+            <p class="text-success mt-3">Alterações salvas com sucesso.</p>
+        }
+    </EditForm>
+}
+
+@code {
+    [Parameter] public string Id { get; set; }
+
+    private UpdateUserDto? model;
+    private bool isLoading = true;
+    private bool saved = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var user = await UserService.GetByIdAsync(Id);
+
+        if (user != null)
+        {
+            model = new UpdateUserDto
+            {
+                Email = user.Email,
+                UserName = user.UserName,
+                EmailConfirmed = user.EmailConfirmed
+            };
+        }
+
+        isLoading = false;
+    }
+
+    private async Task UpdateUser()
+    {
+        if (model == null) return;
+
+        var ok = await UserService.UpdateAsync(Id, model);
+
+        if (ok)
+        {
+            saved = true;
+            await Task.Delay(1200);
+            NavigationManager.NavigateTo("/users");
+        }
+    }
+
+    private void GoBack()
+    {
+        NavigationManager.NavigateTo("/users");
+    }
+}

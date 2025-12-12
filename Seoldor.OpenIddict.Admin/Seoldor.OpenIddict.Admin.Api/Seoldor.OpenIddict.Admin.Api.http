@@ -1,0 +1,6 @@
+@Seoldor.OpenIddict.Admin.Api_HostAddress = http://localhost:5230
+
+GET {{Seoldor.OpenIddict.Admin.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

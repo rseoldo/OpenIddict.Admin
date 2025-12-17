@@ -31,18 +31,18 @@ jobs:
       ConnectionStrings__DefaultConnection: Host=localhost;Port=5432;Database=openiddict_admin;Username=postgres;Password=root
 
     steps:
-      - name: 📥 Checkout repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: 🧰 Setup .NET 10 SDK
+      - name: Setup .NET 10 SDK
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '10.0.x'
 
-      - name: 📦 Restore dependencies
+      - name: Restore dependencies
         run: dotnet restore Seoldor.OpenIddict.Admin.sln
 
-      - name: 🏗️ Build solution
+      - name: Build solution
         run: dotnet build Seoldor.OpenIddict.Admin.sln --configuration Release --no-restore
 
       - name: 🧪 Run tests
